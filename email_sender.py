@@ -39,11 +39,12 @@ def send_mail(
         message = MIMEMultipart()
         message["FROM"] = f"{display_name} <{sender}>"
         message["TO"] = to
+        message["CC"] = ", ".join([item for item in cc])
         message.add_header("reply-to", reply_to)
         message["SUBJECT"] = subject
         message.attach(MIMEText(body, "plain"))
 
-        to_address = [to] + list(cc) + list(bcc)
+        to_address = [to] + list(bcc)
 
         if attachment:
             for att in attachment:
